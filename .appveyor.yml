@@ -1,2 +1,4 @@
+build: off
+
 test_script:
     - test\hg\bat\test-incoming.bat
