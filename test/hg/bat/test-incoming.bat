@@ -87,9 +87,9 @@ if not %i% == %countClosed% (
 echo Found all closed
 :CLEANUP
 call %~dp0\cleanup.bat %r1% %r2%
-del %newbranch%
-del %existing%
-del %closed%
+if EXIST "%newbranch%" del %newbranch%
+if EXIST "%existing%" del %existing%
+if EXIST "%closed%" del %closed%
 
 if %result%==0 echo SUCCESS
 if %result%==1 echo FAILURE

@@ -2,7 +2,7 @@ if "%~1"=="" goto invalidrepo
 cd %~dp0\%1
 echo text >> file
 hg add *
-hg commit -m "changed file from %0"
+hg commit --config ui.username=test -m "changed file from %0"
 hg push
 goto done
 

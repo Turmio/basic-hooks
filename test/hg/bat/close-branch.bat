@@ -1,6 +1,6 @@
 if "%~1"=="" goto invalidrepo
 cd %~dp0\%1
-hg commit --close-branch -m "closed"
+hg commit --config ui.username=test --close-branch -m "closed"
 hg push
 goto done
 
