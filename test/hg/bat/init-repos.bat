@@ -1,8 +1,6 @@
 echo %1
 if "%~1"=="" goto parameter1
-else
 if "%~2"=="" goto parameter2
-else
 echo Creating repository %1
 hg init  %~dp0\%1
 echo Cloning %2 from %1
