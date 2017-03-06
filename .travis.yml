@@ -4,8 +4,9 @@ branches:
   only:
     - gh-pages
     - /.*/
-
+    
 install: true
 
 script:
+    - chmod +x test/hg/bash/test-incoming.sh
     - ./test/hg/bash/test-incoming.sh
