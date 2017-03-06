@@ -1,13 +1,10 @@
 if "%~1"=="" goto invalidrepo
-cd %~dp0\%1
-hg commit --config ui.username=test --close-branch -m "closed"
-hg push
+hg commit -R %~dp0\%1 --config ui.username=test --close-branch -m "closed"
+hg push -R %~dp0\%1
 goto done
 
 :invalidrepo
 echo Invalid repository
-cd %~dp0
 exit /b 1;
 
 :done
-cd %~dp0

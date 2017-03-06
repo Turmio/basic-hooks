@@ -18,8 +18,8 @@ if errorlevel 1 (
     goto CLEANUP
 )
 
-call %~dp0\change-file.bat %r2%
-call %~dp0\change-file.bat %r2%
+call %~dp0\change-file.bat %r2% file
+call %~dp0\change-file.bat %r2% file
 call %~dp0\close-branch.bat %r2%
 
 rem Verify results

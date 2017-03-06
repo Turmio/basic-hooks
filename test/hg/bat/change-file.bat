@@ -1,15 +1,17 @@
 if "%~1"=="" goto invalidrepo
-cd %~dp0\%1
-echo text >> file
-hg add *
-hg commit --config ui.username=test -m "changed file from %0"
-hg push
+if "%~2"=="" goto invalidfile
+echo text >> %~dp0\%1\%2
+hg add -R %~dp0\%1 %~dp0\%1\*
+hg commit -R %~dp0\%1 --config ui.username=test -m "changed file from %0"
+hg push -R %~dp0\%1
 goto done
 
 :invalidrepo
 echo Invalid repository
-cd %~dp0
-exit /b 1;
+exit /b 1
+
+:invalidfile
+echo Filename cannot be empty
+exit /b 1
 
 :done
-cd %~dp0
