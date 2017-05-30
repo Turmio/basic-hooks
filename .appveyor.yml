@@ -2,3 +2,4 @@ build: off
 
 test_script:
     - test\hg\bat\test-incoming.bat
+    - test\hg\bat\test-incoming.bat branch-with-dash

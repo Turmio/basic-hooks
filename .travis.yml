@@ -10,3 +10,4 @@ install: true
 script:
     - chmod +x test/hg/bash/test-incoming.sh
     - ./test/hg/bash/test-incoming.sh
+    - ./test/hg/bash/test-incoming.sh with-dash

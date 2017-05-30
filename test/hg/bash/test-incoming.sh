@@ -8,6 +8,12 @@ checkReturnCode() {
     fi
 }
 
+BRANCH=$1
+
+if [ -z $BRANCH ]; then 
+    BRANCH=default
+fi
+
 REPO1=repository1
 REPO2=repository2
 SCRIPT_PATH=$(dirname `which $0`)
@@ -31,6 +37,7 @@ source $SCRIPT_PATH/add-hook.sh $REPO1 incoming "$NP"  "$NE" "$NC"
 ret_code=$? 
 checkReturnCode $ret_code $CLEANUP
 
+source $SCRIPT_PATH/change-branch.sh $ABSOLUTE/$REPO2 $BRANCH
 
 source $SCRIPT_PATH/change-file.sh $ABSOLUTE/$REPO2 "file"
 ret_code=$? 
@@ -44,9 +51,9 @@ source $SCRIPT_PATH/close-branch.sh $ABSOLUTE/$REPO2
 ret_code=$? 
 checkReturnCode $ret_code $CLEANUP
 
-EXPECTED_NEW=("default")
-EXPECTED_EXISTING=("default")
-EXPECTED_CLOSED=("default")
+EXPECTED_NEW=("$BRANCH")
+EXPECTED_EXISTING=("$BRANCH")
+EXPECTED_CLOSED=("$BRANCH")
 I=0
 while IFS='' read -r line || [[ -n "$line" ]]; do
     linearr=($line)
@@ -55,7 +62,7 @@ while IFS='' read -r line || [[ -n "$line" ]]; do
     fi
     let "I++"
 done < "$NEWBRANCH"
-if [! $i -eq ${EXPECTED_NEW[@]} ]; then
+if [ "$I" -ne "${#EXPECTED_NEW[@]}" ]; then
     RESULT=1
 fi
 I=0
@@ -68,7 +75,7 @@ while IFS='' read -r line || [[ -n "$line" ]]; do
     let "I++"
 done < "$EXISTING"
 
-if [! $i -eq ${EXPECTED_EXISTING[@]} ]; then
+if [ "$I" -ne "${#EXPECTED_EXISTING[@]}" ]; then
     RESULT=1
 fi
 
@@ -82,7 +89,7 @@ while IFS='' read -r line || [[ -n "$line" ]]; do
     let "I++"
 done < "$CLOSED"
 
-if [! $i -eq ${EXPECTED_CLOSED[@]} ]; then
+if [ "$I" -ne "${#EXPECTED_CLOSED[@]}" ]; then
     RESULT=1
 fi
 
