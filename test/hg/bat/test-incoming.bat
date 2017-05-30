@@ -1,6 +1,7 @@
 @ECHO OFF
 setlocal EnableDelayedExpansion
-
+set branch=%1
+if [%branch%] == [] set branch=default
 set result=0
 set r1=repository1
 set r2=repository2
@@ -17,16 +18,16 @@ if errorlevel 1 (
     set result=1
     goto CLEANUP
 )
-
+call %~dp0\change-branch.bat %r2% %branch%
 call %~dp0\change-file.bat %r2% file
 call %~dp0\change-file.bat %r2% file
 call %~dp0\close-branch.bat %r2%
 
 rem Verify results
 echo Starting to verify results
-set expectedNew[0]=default
-set expectedExisting[0]=default
-set expectedClose[0]=default
+set expectedNew[0]=%branch%
+set expectedExisting[0]=%branch%
+set expectedClose[0]=%branch%
 
 rem TODO: calculate from above
 set countNew=1
